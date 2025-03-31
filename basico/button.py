@@ -1,11 +1,11 @@
 import pygame
 from typing import Union, List, Tuple
-
+from basico.text import Text
 import basico.tools as tools
 from abc import ABC
 
 class Button:
-    #começo de tudo, algumas funções estão uma zona, mas adicionei docstrings para não ficar tão confuso
+    
     """
     Classe para criar e manipular botões na interface gráfica.
 
@@ -25,16 +25,13 @@ class Button:
 
     def __init__(self,
                  window: pygame.Surface,
-                 title: str,
+                 title:Text,
                  size: Union[list[int], Tuple[int, int, int]],
                  color: Union[str, Tuple[int, int, int]],
                  coordinates: List[int] = [0, 0],
                  command: callable = None,
                  background: str = None,
-                 tags: str = "elipse",
-                 color_title: str = "white",
-                 size_title: int = 50,
-                 background_color_title: str = None):
+                 tags: str = "elipse"):
         self.window = window
         self.title = title
         self.size = size
@@ -43,17 +40,10 @@ class Button:
         self.command = command
         self.background = background
         self.tags = tags
-        self.background_color_title = background_color_title
-        self.color_title = color_title
         self.backup_window = window.copy()
         self.draw = False
         self.fora = False
-        self.size_title = size_title
-        self.title_surface = tools.insert_text(text=title.upper(),
-                                               color=self.color_title,
-                                               size=self.size_title,
-                                               background_color=self.background_color_title)
-        self.size_of_title = self.title_surface.get_size()
+        #self.size_of_title = self.title_surface.get_size()
 
     def pack(self):
         """
@@ -62,14 +52,14 @@ class Button:
         Returns:
             Button: Retorna o próprio objeto Button.
         """
-        self.__coordinate_title =  tools.get_mid(self.coordinates,self.size,self.size_of_title)
+        self.__coordinate_title =  tools.get_mid(self.coordinates,self.size,self.title.get_size_tuple())
         self.rect = tools.draw_rect(window=self.window,
                                     size=self.size,
                                     color=self.color,
                                     coordinates=self.coordinates,
                                     background=self.background,
                                     tags=self.tags)
-        self.window.blit(self.title_surface, (self.__coordinate_title))
+        self.window.blit(self.title.get_surface(), (self.__coordinate_title))
         self.backup_window = self.window.copy()
         return self
 
