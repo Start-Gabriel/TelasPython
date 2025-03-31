@@ -175,3 +175,14 @@ def get_mid(object_base_coordinates:Union[List[int],Tuple[int,int]],
         coordinate = [object_base_coordinates[0] + object_base_size[0]/2 - object_target_size[0]/2, object_base_coordinates[1] + object_base_size[1]/2 - object_target_size[1]/2]
     
     return coordinate
+
+def furp(path:str):
+    """FUCK YOU RELATIVE PATH!!!!!!!!!!!!!!!!!
+
+    Args:
+        path (str): relative path
+
+    Returns:
+        str: _relative path
+    """
+    return path.replace("\ ".replace(' ',''),'/')
