@@ -33,12 +33,16 @@ def get_color(name_of_color:Union[str,Tuple[int,int,int]]):
     "gold": (255, 215, 0),
     "silver": (192, 192, 192)
 }
-
-    if type(name_of_color) == str:
-        name_of_color = name_of_color.lower()
-        return COLORS[name_of_color]
-    else:
-        return name_of_color
+    try:
+        if name_of_color:
+            if type(name_of_color) != tuple:
+                name_of_color = name_of_color.lower()
+                return COLORS[name_of_color]
+            else:
+                return name_of_color
+    except:
+        print("error, set defaut color 'black'")
+        return (0,0,0)
 
 def get_image(path_image:str):
     """Função para fazer upload de imagem
