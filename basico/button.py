@@ -1,4 +1,5 @@
 import pygame
+from basico.window import Window
 from typing import Union, List, Tuple
 from basico.text import Text
 import basico.tools as tools
@@ -24,7 +25,7 @@ class Button:
     """
 
     def __init__(self,
-                 window: pygame.Surface,
+                 window: pygame.Surface|Window,
                  title:Text,
                  size: Union[list[int], Tuple[int, int, int]],
                  color: Union[str, Tuple[int, int, int]],
