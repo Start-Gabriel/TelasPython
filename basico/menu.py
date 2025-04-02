@@ -33,13 +33,13 @@ class Menu:
             pass
     def draw(self):
         self.button_menu.draw()
+        alight_buttons(start_pos=self.button_menu.rect.get_pos(),orientation=self.expand,space=1,buttons=self.buttons)
     def run(self,pos:List[int]|Tuple[int,int]):
         self.button_menu.run(pos=pos)
     def open(self):
         self.__openValidation = not self.__openValidation
         try:
             if self.__openValidation:
-                alight_buttons(start_pos=self.button_menu.rect.get_pos(),orientation=self.expand,space=1,buttons=self.buttons)
                 for but in self.buttons.copy():
                     but.draw()
                 self.__runMenu()

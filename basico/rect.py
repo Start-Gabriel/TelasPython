@@ -7,12 +7,13 @@ class Rect:
     def __init__(self,
                  size:List[int]|Tuple[int,int]=[100,50],
                  pos:List[int]|Tuple[int,int]=[0,0],
-                 color:str|List[int]|Tuple[int,int,int]="white"):
+                 color:str|List[int]|Tuple[int,int,int]="white",
+                 border:int = 0):
         self.size = size
         self.pos = pos
         self.color = get_color(color)
         self.rect = pygame.Rect(pos[0],pos[1],size[0], size[1])
-        self.__border = 0
+        self.border= border
 
     def draw(self,
              window:pygame.Surface|Window,
@@ -21,7 +22,10 @@ class Rect:
             self.pos = pos
         self.rect.left = self.pos[0]
         self.rect.top = self.pos[1]
-        pygame.draw.rect(window, self.color, self.rect, self.__border)
+        pygame.draw.rect(surface=window,
+                         color=self.color,
+                         rect=self.rect,
+                         width=self.border)
     def clickpoint(self, pos):
         return self.rect.collidepoint(pos)
     

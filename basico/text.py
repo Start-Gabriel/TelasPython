@@ -12,14 +12,13 @@ class Text:
         self.color = get_color(color)
         self.background_color = get_color(background_color)
         self.size = size
-        try:
-            self.font = pygame.font.Font(None,self.size)
-            self.text_render = self.font.render(self.text,
-                                                True,
-                                                self.color,
-                                                self.background_color)
-        except:
-            print(f"erro em {self.text}")
+        self.font = pygame.font.Font(None,self.size)
+        self.text_render = self.font.render(self.text,
+                                            True,
+                                            self.color,
+                                            self.background_color)
+    def draw(self, window:pygame.Surface,pos:List[int]|Tuple[int,int]):
+        window.blit(self.text_render,pos)
     def get_surface(self):
         return self.text_render
     def get_text(self):

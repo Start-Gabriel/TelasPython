@@ -13,20 +13,24 @@ class Button:
                  title:Text,
                  RectValues:Rect,
                  command: callable = None,
-                 background: str|Image = None):
+                 background: str|Image = None,
+                 tags:callable = None):
         self.window = window
         self.title = title
         self.rect = RectValues
         self.command = command
         self.background = background
+        self.tags = tags
     def draw(self):
-        self.__coordinate_title =  tools.get_mid(self.rect.get_pos(),self.rect.get_size(),self.title.get_size_tuple())
+        self.__title_pos =  tools.get_mid(self.rect.get_pos(),self.rect.get_size(),self.title.get_size_tuple())
         self.rect.draw(window=self.window, pos= self.rect.get_pos())
         if self.background:
             self.background.draw(window=self.window,
                                  pos=self.pos,
                                  size=self.rect.get_size())
-        self.window.blit(self.title.get_surface(), (self.__coordinate_title))
+        self.title.draw(self.window,self.__title_pos)
+        if self.tags:
+            self.tags()
     def run(self, pos: pygame.mouse):      
         self.press = self.rect.clickpoint(pos=pos)
         if self.press:
@@ -34,6 +38,7 @@ class Button:
                 self.command()
     def get_pos(self):
         return self.rect.get_pos()
+    
 def alight_buttons(start_pos: list,
                    orientation: str,
                    space: int,
