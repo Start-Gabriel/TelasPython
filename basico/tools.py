@@ -1,6 +1,5 @@
 import pygame
 from typing import Union,List,Tuple
-
 pygame.init()
 
 def get_color(name_of_color:Union[str,Tuple[int,int,int]]):
@@ -55,34 +54,6 @@ def get_image(path_image:str):
     """
     image = pygame.image.load(path_image)
     return image
-
-def draw_rect(window:pygame.Surface,
-              size:Union[List[int],Tuple[int,int,int]],
-              color:Union[str,List[int],Tuple[int,int,int]],
-              coordinates:Union[List[int],Tuple[int,int,int]],
-              background:str,
-              tags:str):
-    """Desenha um retângulo na tela
-
-    Args:
-        window (Surface): Janela onde sera desenhado o retângulo
-        size (Union[List[int],Tuple[int,int,int]]): Tamanho do retângulo [largura,altura]
-        color (Union[str,List[int],Tuple[int,int,int]]): _description_
-        coordinates (Union[List[int],Tuple[int,int,int]]): _description_
-        background (str): _description_
-        tags (str): _description_
-
-    Returns:
-        _type_: _description_
-    """
-    if color is not None:
-        rect = pygame.draw.rect(window,color,(coordinates[0],coordinates[1],size[0],size[1]))
-    if background is not None:
-        rect = pygame.Rect((coordinates[0],coordinates[1],size[0],size[1]))
-        background = get_image(background)
-        background = pygame.transform.scale(background,size)
-        window.blit(background,coordinates)
-    return rect
 
 def verify_click(rect:pygame.Rect,
                  position:Union[List[int],Tuple[int,int,int]]):
