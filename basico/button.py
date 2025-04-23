@@ -38,8 +38,10 @@ class Button:
                 self.command()
     def get_pos(self):
         return self.rect.get_pos()
+    def set_title(self, new_title:str):
+        self.title.text = new_title
     
-def alight_buttons(start_pos: list,
+def alight_buttons(start_pos: Union[List[int], Tuple[int, int]],
                    orientation: str,
                    space: int,
                    buttons: List[Button]):
@@ -47,22 +49,22 @@ def alight_buttons(start_pos: list,
     Alinha uma lista de botões horizontal ou verticalmente.
 
     Args:
-        start_pos (list): As coordenadas iniciais para alinhar os botões.
-        orientation (str): A orientação para alinhar os botões ('x' para horizontal, 'y' para vertical).
-        space (int): O espaço entre os botões.
-        buttons (List[Button]): A lista de botões a serem alinhados.
+        start_pos (List[int] | Tuple[int, int]): Posição inicial (x, y).
+        orientation (str): Direção de alinhamento ('x' para horizontal, 'y' para vertical).
+        space (int): Espaço entre os botões.
+        buttons (List[Button]): Lista de instâncias da classe Button.
     """
-    start_coordinate = [start_pos[0], start_pos[1]]
-    if orientation == "x":
-        for new_but in buttons:
-            new_but.rect.pos[0] = start_coordinate[0]
-            start_coordinate[0] = start_coordinate[0] + space + new_but.rect.size[0]
-            new_but.rect.pos[1] = start_coordinate[1]
-    if orientation == "y":
-        for new_but in buttons:
-            new_but.rect.pos[1] = start_coordinate[1]
-            start_coordinate[1] = start_coordinate[1] + space + new_but.rect.size[1]
-            new_but.rect.pos[0] = start_coordinate[0]
+    x, y = start_pos
+
+    for button in buttons:
+        button.rect.set_pos([x, y])  # usa método da classe Rect se disponível, senão set diretamente
+        w, h = button.rect.get_size()
+
+        if orientation == "x":
+            x += w + space
+        elif orientation == "y":
+            y += h + space
+
 
 def get_center_button(size_window: Union[List[int], Tuple[int, int]],
                       button: Button,

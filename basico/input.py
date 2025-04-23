@@ -14,7 +14,7 @@ class Input:
         
         buttonValues.command = self.input_text
         self.input_button = buttonValues
-        self.input_button.title = Text("bcta",buttonValues.title.color,buttonValues.title.background_color)
+        self.input_button.title = Text(buttonValues.title.text,buttonValues.title.color,buttonValues.title.background_color)
         self.backup = buttonValues.window.copy()
         self.texts=""
     def draw(self):

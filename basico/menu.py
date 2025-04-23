@@ -27,13 +27,13 @@ class Menu:
                                   background=background)
         self.__openValidation = False #open and close menu validation
         self.backup = self.window.copy()
-        try:
+        '''try:
             self.buttons.insert(0,self.button_menu)
         except:
-            pass
+            print("erro ao inserir menu")'''
     def draw(self):
         self.button_menu.draw()
-        alight_buttons(start_pos=self.button_menu.rect.get_pos(),orientation=self.expand,space=1,buttons=self.buttons)
+        alight_buttons(start_pos=[self.button_menu.rect.pos[0]+self.button_menu.rect.size[0],self.button_menu.rect.pos[1]+self.button_menu.rect.size[1]],orientation=self.expand,space=1,buttons=self.buttons)
     def run(self,pos:List[int]|Tuple[int,int]):
         self.button_menu.run(pos=pos)
     def open(self):
