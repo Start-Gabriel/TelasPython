@@ -81,13 +81,13 @@ def get_center_button(size_window: Union[List[int], Tuple[int, int]],
         Tuple: As coordenadas centrais (x, y) para o botão.
     """
     if tags == "x":
-        center = (int(size_window[0] / 2 - button.size[0] / 2), button.pos[1])
+        center = (int(size_window[0] / 2 - button.rect.size[0] / 2), button.rect.pos[1])
         return center
     if tags == "y":
-        center = (button.pos[0], int(size_window[1] / 2 - button.size[1] / 2))
+        center = (button.rect.pos[0], int(size_window[1] / 2 - button.rect.size[1] / 2))
         return center
     if tags == "j":
-        center = (int(size_window[0] / 2 - button.size[0] / 2), int(size_window[1] / 2 - button.size[1] / 2))
+        center = (int(size_window[0] / 2 - button.rect.size[0] / 2), int(size_window[1] / 2 - button.rect.size[1] / 2))
         return center
 
 class DefauthButton(ABC):

@@ -8,28 +8,47 @@ import basico.button as tools_button
 import pygame
 pygame.init()
 
+
 class Menu_tela:
     def __init__(self):
-        self.window = Window(size=[800,600], color= "gray").pack()
-        self.buttonABC = Button(window=self.window, title=Text(text="ABC"),RectValues=Rect(size=[200,50]))
-        self.cadastrar = self.buttonABC
-        self.excluir = self.buttonABC
-        self.consultar = self.buttonABC
-        self.todos = self.buttonABC
-        self.alterar = self.buttonABC
-        self.generate_buttons()
-    def generate_buttons(self):
-        self.cadastrar.set_title("CADASTRAR")
-        self.excluir.set_title("EXCLUIR")
-        self.consultar.set_title("CONSULTAR")
-        self.alterar.set_title("ALTERAR")
-        self.todos.set_title("TODOS")
-        self.buttons = [self.cadastrar,self.excluir,self.consultar,self.alterar,self.todos]
-        tools_button.alight_buttons([0,0],"y",10, self.buttons)
+        self.window = Window(size=[800,600], color="gray").pack()
+
+        self.cadastrar = Button(self.window, Text("CADASTRAR"), Rect([200,50]), self.__cadastrar)
+        self.excluir   = Button(self.window, Text("EXCLUIR"),   Rect([200,50]),self.__excluir)
+        self.consultar = Button(self.window, Text("CONSULTAR"), Rect([200,50]),self.__consultar)
+        self.alterar   = Button(self.window, Text("ALTERAR"),   Rect([200,50]), self.__alterar)
+        self.todos     = Button(self.window, Text("TODOS"),     Rect([200,50]), self.__todos)
+        self.buttons = [self.cadastrar, self.excluir, self.consultar, self.alterar, self.todos]
+
+        self.draw()
+
+    def draw(self):
+        center = tools_button.get_center_button([800,600],self.alterar)
+        tools_button.alight_buttons([center[0], 50], "y", 10, self.buttons)
         for but in self.buttons:
             but.draw()
+    def run(self,pos):
+        for but in self.buttons:
+            but.run(pos=pos)
+    def __cadastrar(self):
+        from telas.tela_cadastro import Cadastro
+        produto = Cadastro()
+        produto.run()
+    def __excluir(self):
+        print("b")
+    def __consultar(self):
+        pass
+    def __alterar(self):
+        pass
+    def __todos(self):
+        pass
+
 
 a = Menu_tela()
 
 while True:
+    for events in pygame.event.get():
+        if events.type == pygame.MOUSEBUTTONDOWN:
+            pos = pygame.mouse.get_pos()
+            a.run(pos)
     pygame.display.flip()
