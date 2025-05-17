@@ -12,9 +12,12 @@ class Rect:
         self.size = size
         self.pos = pos
         self.color = get_color(color)
-        self.rect = pygame.Rect(pos[0],pos[1],size[0], size[1])
         self.border= border
-
+        self.generate_Surface(pos=self.pos, size=self.size)
+    def generate_Surface(self,pos:List[int]=None,size:List[int]=None):
+        generate_pos = pos if pos else self.pos
+        generate_size = size if size else self.size
+        self.rect = pygame.Rect(generate_pos[0],generate_pos[1],generate_size[0], generate_size[1])
     def draw(self,
          window: pygame.Surface | Window,
          pos: List[int] | Tuple[int, int] = None):
@@ -29,8 +32,9 @@ class Rect:
                         rect=self.rect,
                         width=self.border)
 
-    def clickpoint(self, pos):
-        return self.rect.collidepoint(pos)
+    def clickpoint(self, pos = None):
+        if pos is not None:
+            return self.rect.collidepoint(pos)
     
     def get_rect(self):
         return self.rect
@@ -42,3 +46,9 @@ class Rect:
         return self.pos
     def set_pos(self,pos):
         self.pos = pos
+        self.generate_Surface(pos=pos)
+    def set_size(self, size:List[int]):
+        self.size = size
+        self.generate_Surface(size=size)
+    def center_x(self, window:pygame.Surface):
+        self.pos = [window.get_size()[0]/2 - self.size[0]/2, self.pos[1]]

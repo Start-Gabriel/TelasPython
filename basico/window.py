@@ -1,6 +1,7 @@
 import pygame
 from typing import Union,List,Tuple
 import basico.tools as tools
+from basico.image import Image
 from abc import ABC
 
 class Window:
@@ -21,6 +22,9 @@ class Window:
         self.background = background
         self.START_COORDINATES = (0,0)
         self.window = pygame.display.set_mode((self.size))
+        pygame.display.set_caption(title="PANIFICADORA DELLIS")
+        #self.icon = Image("images/onda.jpg")
+        #pygame.display.set_icon(self.icon.get_surface())
         
     def pack(self):
         """Chamada para iniciar a tela

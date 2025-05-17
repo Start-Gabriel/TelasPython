@@ -1,7 +1,6 @@
 import pygame
 from typing import List,Tuple
 from basico.tools import furp
-from basico.window import Window
 pygame.init()
 
 
@@ -13,9 +12,10 @@ class Image:
         self.size = size
         self.image_surface = pygame.image.load(self.path)
     def draw(self,
-             window:pygame.Surface|Window,
+             window:pygame.Surface,
              pos:List[int]|Tuple[int,int],
              size:List[int]|Tuple[int,int]=None):
+        from basico.window import Window
         try:
             if self.size:
                 self.image_scale = pygame.transform.scale(self.image_surface, self.size)

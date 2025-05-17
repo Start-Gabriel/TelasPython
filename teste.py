@@ -1,25 +1,18 @@
-from basico.button import Button
-import basico.button as buton
-from basico.window import Window
-from basico.text import Text
-from basico.image import Image
-from basico.rect import Rect
-from basico.menu import Menu
+from submenus.menu_venda import MenuVenda
+from telas.tela_vendav2 import TelaVenda
+from windows.window_venda import WindowVenda
 import pygame
-from basico.input import Input
-import basico.image
-pygame.init()
-def test():
-    print("teste")
-janela = Window([600,600], "gray").pack()
-but = Button(janela,Text("butao","pink"),Rect([100,50],color="black"),test)
-but1= Button(janela,Text("butao1","pink"),Rect([100,50],color="black"),test)
-but2 = Button(janela,Text("butao2","pink"),Rect([100,50],color="black"),test)
-loop = True
-while loop:
-    for events in pygame.event.get():
-        if events.type == pygame.MOUSEBUTTONDOWN:
+clock = pygame.time.Clock()
+window = WindowVenda()
+app = TelaVenda(window=window.draw())
+app.draw()
+
+pygame.display.flip()
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
-    
-            
+            app.run(pos=pos)
+        
     pygame.display.flip()
+    clock.tick(60)

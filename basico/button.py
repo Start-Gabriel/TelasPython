@@ -10,17 +10,24 @@ from abc import ABC
 class Button:
     def __init__(self,
                  window: pygame.Surface|Window,
-                 title:Text,
+                 title:Text|str,
                  RectValues:Rect,
                  command: callable = None,
                  background: str|Image = None,
                  tags:callable = None):
         self.window = window
-        self.title = title
+        if type(title) == str:
+            self.title = Text(title)
+        else:
+            self.title = title
         self.rect = RectValues
         self.command = command
         self.background = background
         self.tags = tags
+        self.color = RectValues.color
+        self.validation_temp = True
+        self.verfy_press = False
+        self.gambiarra_verify = False
     def draw(self):
         self.__title_pos =  tools.get_mid(self.rect.get_pos(),self.rect.get_size(),self.title.get_size_tuple())
         self.rect.draw(window=self.window, pos= self.rect.get_pos())
@@ -31,16 +38,38 @@ class Button:
         self.title.draw(self.window,self.__title_pos)
         if self.tags:
             self.tags()
-    def run(self, pos: pygame.mouse):      
-        self.press = self.rect.clickpoint(pos=pos)
-        if self.press:
+    def run(self, pos: pygame.mouse = None):
+        if pos is not None:      
+            self.verfy_press = self.rect.clickpoint(pos=pos)
+        else:
+            self.verfy_press = True
+        if self.verfy_press:
             if self.command is not None:
+                self.gambiarra_verify = True
                 self.command()
+    def get_title(self):
+        return self.title.text
     def get_pos(self):
         return self.rect.get_pos()
+    def get_size(self):
+        return self.rect.get_size()
     def set_title(self, new_title:str):
         self.title.text = new_title
-    
+    def set_temp_color(self,color:str):
+        self.rect.color = color
+    def set_size(self,size:List[int]):
+        self.rect.set_size(size)
+    def set_pos(self, pos):
+        self.rect.set_pos(pos)
+    def get_clicked(self):
+        if self.verfy_press:
+            return True
+        else:
+            return False
+    @property
+    def press(self):
+        gambiarra = self.get_clicked()
+        return gambiarra
 def alight_buttons(start_pos: Union[List[int], Tuple[int, int]],
                    orientation: str,
                    space: int,
@@ -57,8 +86,8 @@ def alight_buttons(start_pos: Union[List[int], Tuple[int, int]],
     x, y = start_pos
 
     for button in buttons:
-        button.rect.set_pos([x, y])  # usa método da classe Rect se disponível, senão set diretamente
-        w, h = button.rect.get_size()
+        button.set_pos([x, y])  # usa método da classe Rect se disponível, senão set diretamente
+        w, h = button.get_size()
 
         if orientation == "x":
             x += w + space
